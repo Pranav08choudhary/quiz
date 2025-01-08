@@ -4,4 +4,5 @@ import { ReactComponent as Refresh } from '../assets/icons/refresh.svg'
 import { ReactComponent as TimerIcon } from '../assets/icons/timer.svg'
 import { ReactComponent as StartIcon } from '../assets/icons/start.svg'
 import { ReactComponent as Logo } from '../assets/icons/Logo.svg'
-export {  CheckIcon, Next, Refresh, TimerIcon, StartIcon, Logo  }
+import { ReactComponent as Logo_green } from '../assets/icons/Logo_green.svg'
+export { CheckIcon, Next, Refresh, TimerIcon, StartIcon, Logo, Logo_green }

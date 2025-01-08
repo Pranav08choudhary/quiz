@@ -118,7 +118,7 @@ const ResultOverview: FC<ResultOverviewProps> = ({ result, userData }) => {
         return;
       }
 
-      const response = await axios.post("http://localhost:5000/api/linkedin/share", {
+      const response = await axios.post("http://localhost:3004/api/linkedin/share", {
         accessToken,
         message: `I just completed The Lube Buzz Quiz 2024! I scored ${obtainedScore}/${quizDetails.totalScore} and achieved the status of ${calculateStatus}. 🎉`,
       });

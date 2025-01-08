@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import {  Logo } from '../../config/icons'
+import {   Logo_green } from '../../config/icons'
 import { useQuiz } from '../../context/QuizContext'
 import {
   CenterCardContainer,
@@ -99,7 +99,7 @@ const QuizTopicsScreen: React.FC = () => {
     <PageCenter light justifyCenter>
       <CenterCardContainer>
         <LogoContainer>
-          <Logo />
+          <Logo_green />
         </LogoContainer>
         <Heading>
           WELCOME TO <HighlightedText> Lube Buzz Quiz</HighlightedText>

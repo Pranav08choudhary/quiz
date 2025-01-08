@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Logo, StartIcon } from '../../config/icons'
+import { Logo_green, StartIcon } from '../../config/icons'
 import { useQuiz } from '../../context/QuizContext'
 import {
   CenterCardContainer,
@@ -65,7 +65,7 @@ const QuizDetailsScreen = () => {
     <PageCenter light justifyCenter>
       <CenterCardContainer>
         <LogoContainer>
-          <Logo />
+          <Logo_green />
         </LogoContainer>
         <AppTitle>Lube Buzz Quiz</AppTitle>
         <InstructionsContainer>
