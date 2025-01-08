@@ -5,6 +5,7 @@ import { device } from "../../../styles/BreakPoints";
 import { HighlightedText } from "../../../styles/Global";
 import { convertSeconds } from "../../../utils/helpers";
 import { Result } from "../../../types";
+import axios from "axios";
 
 const ResultOverviewStyle = styled.div`
   text-align: center;
@@ -98,7 +99,6 @@ const ResultOverview: FC<ResultOverviewProps> = ({ result, userData }) => {
       }
 
       const { fileUrl } = await response.json();
-      // Create an invisible link and trigger the download
       const link = document.createElement("a");
       link.href = fileUrl;
       link.download = `${userData.name}_certificate.pdf`;
@@ -111,40 +111,25 @@ const ResultOverview: FC<ResultOverviewProps> = ({ result, userData }) => {
 
   const handleShareOnLinkedIn = async () => {
     try {
-      const response = await fetch("/api/linkedin/share", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          accessToken: sessionStorage.getItem("linkedInAccessToken"), // Token should be securely managed
-          message: `I just completed The Lube Buzz Quiz 2024! I scored ${obtainedScore}/${quizDetails.totalScore} and achieved the status of ${calculateStatus}. 🎉`,
-        }),
+      const accessToken = sessionStorage.getItem("linkedInAccessToken");
+
+      if (!accessToken) {
+        alert("Access token is missing.");
+        return;
+      }
+
+      const response = await axios.post("http://localhost:5000/api/linkedin/share", {
+        accessToken,
+        message: `I just completed The Lube Buzz Quiz 2024! I scored ${obtainedScore}/${quizDetails.totalScore} and achieved the status of ${calculateStatus}. 🎉`,
       });
 
-      // Check if response is OK
-      if (!response.ok) {
-        const textResponse = await response.text(); // Read the response as text
-        throw new Error(`Error sharing on LinkedIn: ${textResponse}`);
-      }
-
-      // Try to parse JSON response if available
-      try {
-        const data = await response.json();
+      if (response.status === 200) {
         alert("Successfully shared on LinkedIn!");
-      } catch (jsonError) {
-        // If JSON parsing fails, log the error and alert the user
-        console.error("Error parsing JSON response:", jsonError);
-        alert("Failed to share on LinkedIn. Please try again later.");
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error("Error sharing on LinkedIn:", error.message);
-        alert(`Error sharing on LinkedIn: ${error.message}`);
       } else {
-        console.error("An unknown error occurred.");
-        alert("An unknown error occurred while sharing on LinkedIn.");
+        alert("Failed to share on LinkedIn.");
       }
+    } catch (error: any) {
+      alert(error.response?.data?.error || "An error occurred while sharing.");
     }
   };
 
